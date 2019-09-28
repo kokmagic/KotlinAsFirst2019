@@ -3,7 +3,9 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -108,7 +110,17 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    return when {
+        (rookX1 == kingX && rookX2 == kingX) || (rookY1 == kingY && rookY2 == kingY) ||
+                (rookX1 == kingX && rookY2 == kingY) ||
+                (rookY1 == kingY && rookX2 == kingX) -> 3
+        (rookX1 == kingX) || (rookY1 == kingY) -> 1
+        (rookX2 == kingX) || (rookY2 == kingY) -> 2
+        else -> 0
+
+    }
+}
 
 /**
  * Простая
@@ -124,7 +136,17 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    val m = abs(kingX - bishopX)
+    val v = abs(kingY - bishopY)
+    return when {
+        (rookX == kingX && m == v) ||
+                (rookY == kingY && m == v) -> 3
+        (m == v) -> 2
+        (rookX == kingX) || (rookY == kingY) -> 1
+        else -> 0
+    }
+}
 
 /**
  * Простая
@@ -134,7 +156,17 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val h = maxOf(a, b, c)
+    val p = minOf(a, b, c)
+    val q = a + b + c - h - p
+    return when {
+        (q + p < h) -> -1
+        (h * h == p * p + q * q) -> 1
+        (h * h < p * p + q * q) -> 0
+        else -> 2
+    }
+}
 
 /**
  * Средняя
@@ -144,4 +176,18 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        (b == a) || (d == c) -> 0
+        (d - c <= b - a) && (d < a) || (c > b) -> -1
+        (d - c <= b - a) && (c >= a && d <= b) -> d - c
+        (d - c <= b - a) && (c < a && d >= a) -> d - a
+        (d - c <= b - a) && (c <= b && d > b) -> b - c
+        (b - a < d - c) && (b < c) -> -1
+        (b - a < d - c) && (a > d) -> -1
+        (b - a < d - c) && (a < c && b >= c) -> b - c
+        (b - a < d - c) && (a >= c && b <= d) -> b - a
+        (b - a < d - c) && (a <= d && b > d) -> d - a
+        else -> -1
+    }
+}
