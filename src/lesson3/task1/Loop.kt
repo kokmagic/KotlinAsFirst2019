@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -71,7 +72,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number = n
+    var number = abs(n)
     do {
         number /= 10
         count += 1
@@ -105,7 +106,7 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     var min = m * n
-    for (i in min downTo 1) {
+    for (i in sqr(min) downTo 1) {
         if ((i % m == 0) && (i % n == 0)) min = i
     }
     return min
@@ -117,7 +118,7 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var min = n
+    var min = sqr(n)
     for (i in n downTo 2) {
         if (n % i == 0) min = i
     }
@@ -131,7 +132,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var max = 1
-    for (i in max..n) {
+    for (i in max..sqr(n)) {
         if ((n % i == 0) && (i < n)) max = i
     }
     return max
@@ -162,7 +163,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var count = 0
-    for (i in sqr(m)..sqr(n)) {
+    for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
         if ((n >= i * i) && (m <= i * i)) count = 1
     }
     return count == 1
@@ -184,7 +185,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var number = x
+    var count = 0
+    while (number != 1) {
+        count += 1
+        if (number % 2 == 0) number /= 2
+        else number = number * 3 + 1
+    }
+    return count
+}
+
+
 
 /**
  * Средняя
