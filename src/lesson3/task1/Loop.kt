@@ -5,6 +5,7 @@ package lesson3.task1
 import lesson1.task1.sqr
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -105,11 +106,13 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var min = m * n
-    for (i in sqr(min) downTo 1) {
-        if ((i % m == 0) && (i % n == 0)) min = i
+    var max = maxOf(m, n)
+    var k = 0
+    while (k == 0) {
+        if ((max % m == 0) && (max % n == 0)) k = max
+        max += maxOf(m, n)
     }
-    return min
+    return k
 }
 
 /**
@@ -118,25 +121,21 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var min = sqr(n)
-    for (i in n downTo 2) {
-        if (n % i == 0) min = i
+    var nod = 0
+    for (i in 2..sqr(n)) {
+        if (n % i == 0) nod = i
+        if (nod > 0) break
     }
-    return min
+    return if (nod == 0) n else nod
 }
+
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var max = 1
-    for (i in max..sqr(n)) {
-        if ((n % i == 0) && (i < n)) max = i
-    }
-    return max
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -165,6 +164,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     var count = 0
     for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
         if ((n >= i * i) && (m <= i * i)) count = 1
+        if (count == 1) break
     }
     return count == 1
 }
@@ -195,7 +195,6 @@ fun collatzSteps(x: Int): Int {
     }
     return count
 }
-
 
 
 /**
@@ -259,7 +258,24 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var k: Int
+    var j = 0
+    var s = 0
+    var c: Int
+    while (s < n) {
+        k = sqr(j)
+        c = 0
+        while (k > 0) {
+            k /= 10
+            c += 1
+        }
+        s += c
+        j += 1
+    }
+    return (sqr(j - 1) / 10.0.pow(s - n) % 10).toInt()
+}
+
 
 /**
  * Сложная
@@ -270,4 +286,22 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var k: Int
+    var j = 1
+    var s = 0
+    var c: Int
+    while (s < n) {
+        k = fib(j)
+        c = 0
+        while (k > 0) {
+            k /= 10
+            c += 1
+        }
+        s += c
+        j += 1
+    }
+    return (fib(j - 1) / 10.0.pow(s - n) % 10).toInt()
+}
+
+
