@@ -122,7 +122,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var nod = 0
-    for (i in 2..sqr(n)) {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) nod = i
         if (nod > 0) break
     }
