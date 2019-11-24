@@ -8,6 +8,18 @@ import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+fun stepen(n: Int, m: Int): Int {
+    var number = n
+    for (i in 1 until m) {
+        number *= number
+    }
+    return when (m) {
+        0 -> 1
+        1 -> n
+        else -> number
+    }
+
+}
 /**
  * Пример
  *
@@ -76,7 +88,7 @@ fun digitNumber(n: Int): Int {
     var number = abs(n)
     do {
         number /= 10
-        count += 1
+        count++
     } while (number > 0)
     return count
 }
@@ -145,11 +157,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var nod = 0
-    for (i in 1..max(m, n)) {
-        if ((m % i == 0) && (n % i == 0)) nod = i
-    }
-    return nod == 1
+    return lcm(m, n) == m * n
 }
 
 
@@ -259,21 +267,19 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var k: Int
     var j = 0
     var s = 0
-    var c: Int
     while (s < n) {
-        k = sqr(j)
-        c = 0
+        var k = sqr(j)
+        var c = 0
         while (k > 0) {
             k /= 10
             c += 1
         }
         s += c
-        j += 1
+        j++
     }
-    return (sqr(j - 1) / 10.0.pow(s - n) % 10).toInt()
+    return (sqr(j - 1) / stepen(10, s - n) % 10)
 }
 
 
@@ -287,13 +293,11 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var k: Int
     var j = 1
     var s = 0
-    var c: Int
     while (s < n) {
-        k = fib(j)
-        c = 0
+        var k = fib(j)
+        var c = 0
         while (k > 0) {
             k /= 10
             c += 1
@@ -301,7 +305,7 @@ fun fibSequenceDigit(n: Int): Int {
         s += c
         j += 1
     }
-    return (fib(j - 1) / 10.0.pow(s - n) % 10).toInt()
+    return (fib(j - 1) / stepen(10, s - n) % 10)
 }
 
 
