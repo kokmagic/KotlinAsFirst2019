@@ -4,6 +4,8 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.isPrime
+import lesson3.task1.minDivisor
 import kotlin.math.sqrt
 
 /**
@@ -119,10 +121,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
 fun abs(v: List<Double>): Double {
     if (v.isEmpty()) return 0.0
     var s = 0.0
-    var a: Double
     for (element in v) {
-        a = sqr(element)
-        s += a
+        s += sqr(element)
     }
     return sqrt(s)
 }
@@ -198,7 +198,15 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    val a = mutableListOf<Int>()
+    var number = n
+    while (number != 1) {
+        a += minDivisor(number)
+        number /= minDivisor(number)
+    }
+    return a
+}
 
 /**
  * Сложная
@@ -207,8 +215,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
-
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
 
 /**
  * Средняя
@@ -217,7 +224,16 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val a = mutableListOf<Int>()
+    var number = n
+    while (number > 0) {
+        val c = number % base
+        a.add(c)
+        number /= base
+    }
+    return a.reversed()
+}
 
 /**
  * Сложная
@@ -230,7 +246,44 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val a = convert(n, base)
+    var b = ""
+    for (i in a.indices) {
+        val s = a[i]
+        if (s > 9) {
+            when (s.toString()) {
+                "10" -> b += 'a'
+                "11" -> b += 'b'
+                "12" -> b += 'c'
+                "13" -> b += 'd'
+                "14" -> b += 'e'
+                "15" -> b += 'f'
+                "16" -> b += 'g'
+                "17" -> b += 'h'
+                "18" -> b += 'i'
+                "19" -> b += 'j'
+                "20" -> b += 'k'
+                "21" -> b += 'l'
+                "22" -> b += 'm'
+                "23" -> b += 'n'
+                "24" -> b += 'o'
+                "25" -> b += 'p'
+                "26" -> b += 'q'
+                "27" -> b += 'r'
+                "28" -> b += 's'
+                "29" -> b += 't'
+                "30" -> b += 'u'
+                "31" -> b += 'v'
+                "32" -> b += 'w'
+                "33" -> b += 'x'
+                "34" -> b += 'y'
+                "35" -> b += 'z'
+            }
+        } else b += s.toString()
+    }
+    return b
+}
 
 /**
  * Средняя
