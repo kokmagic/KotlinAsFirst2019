@@ -4,7 +4,6 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import lesson3.task1.isPrime
 import lesson3.task1.minDivisor
 import kotlin.math.sqrt
 
@@ -249,38 +248,10 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val a = convert(n, base)
     var b = ""
-    for (i in a.indices) {
-        val s = a[i]
-        if (s > 9) {
-            when (s.toString()) {
-                "10" -> b += 'a'
-                "11" -> b += 'b'
-                "12" -> b += 'c'
-                "13" -> b += 'd'
-                "14" -> b += 'e'
-                "15" -> b += 'f'
-                "16" -> b += 'g'
-                "17" -> b += 'h'
-                "18" -> b += 'i'
-                "19" -> b += 'j'
-                "20" -> b += 'k'
-                "21" -> b += 'l'
-                "22" -> b += 'm'
-                "23" -> b += 'n'
-                "24" -> b += 'o'
-                "25" -> b += 'p'
-                "26" -> b += 'q'
-                "27" -> b += 'r'
-                "28" -> b += 's'
-                "29" -> b += 't'
-                "30" -> b += 'u'
-                "31" -> b += 'v'
-                "32" -> b += 'w'
-                "33" -> b += 'x'
-                "34" -> b += 'y'
-                "35" -> b += 'z'
-            }
-        } else b += s.toString()
+    for (element in a) {
+        if (element > 9) {
+            b += 'a' - 10 + element
+        } else b += element.toString()
     }
     return b
 }
