@@ -4,14 +4,12 @@ package lesson3.task1
 
 import lesson1.task1.sqr
 import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.pow
 import kotlin.math.sqrt
 
-fun stepen(n: Int, m: Int): Int {
+fun pow(n: Int, m: Int): Int {
     var number = n
-    for (i in 1 until m) {
-        number *= number
+    repeat(m - 1) {
+        number *= n
     }
     return when (m) {
         0 -> 1
@@ -20,6 +18,15 @@ fun stepen(n: Int, m: Int): Int {
     }
 
 }
+
+fun gcd(n: Int, m: Int): Int {
+    var nod = 1
+    for (i in 1..minOf(m, n)) {
+        if ((m % i == 0) && (n % i == 0)) nod = i
+    }
+return nod
+}
+
 /**
  * Пример
  *
@@ -117,15 +124,8 @@ fun fib(n: Int): Int {
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    var max = maxOf(m, n)
-    var k = 0
-    while (k == 0) {
-        if ((max % m == 0) && (max % n == 0)) k = max
-        max += maxOf(m, n)
-    }
-    return k
-}
+fun lcm(m: Int, n: Int): Int = m * n / gcd(m, n)
+
 
 /**
  * Простая
@@ -156,7 +156,7 @@ fun maxDivisor(n: Int): Int = n / minDivisor(n)
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
+fun isCoPrime(m: Int, n: Int): Boolean = gcd(m, n) == 1
 
 
 /**
@@ -277,7 +277,7 @@ fun squareSequenceDigit(n: Int): Int {
         s += c
         j++
     }
-    return (sqr(j - 1) / stepen(10, s - n) % 10)
+    return (sqr(j - 1) / pow(10, s - n)) % 10
 }
 
 
@@ -303,7 +303,7 @@ fun fibSequenceDigit(n: Int): Int {
         s += c
         j += 1
     }
-    return (fib(j - 1) / stepen(10, s - n) % 10)
+    return (fib(j - 1) / pow(10, s - n) % 10)
 }
 
 
