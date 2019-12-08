@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.sorted
+
 /**
  * Пример
  *
@@ -157,6 +159,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+
 /**
  * Средняя
  *
@@ -266,11 +269,9 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    if (list.isEmpty()) return Pair(-1, -1)
     for (i in list.indices) {
-        val a = list[i]
-        val b = number - a
-        return if (list.contains(b)) i to list.indexOf(b) else Pair(-1, -1)
+        val b = number - list[i]
+        if (list.contains(b) && (i != list.indexOf(b))) return (i to list.indexOf(b)).sorted()
     }
     return -1 to -1
 }
