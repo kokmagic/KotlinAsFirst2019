@@ -158,7 +158,18 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    if (jumps.contains(Regex("""[^0-9%\-\s]"""))) return -1
+    var max = 0
+    val parts = jumps.split1(" ")
+    for (part in parts) {
+        val matchResult = Regex("""\d+""").find(part)
+        if (matchResult != null) {
+            if (part.toInt() > max) max = part.toInt()
+        }
+    }
+    return if (max == 0) -1 else max
+}
 
 /**
  * Сложная
@@ -171,7 +182,14 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var max = 0
+    val parts = jumps.split1(" ")
+    for (i in 0..(parts.size - 2) step 2) {
+        if ((parts[i + 1].contains("+")) && (parts[i].toInt() > max)) max = parts[i].toInt()
+    }
+    return if (max == 0) -1 else max
+}
 
 /**
  * Сложная
@@ -197,7 +215,7 @@ fun firstDuplicateIndex(str: String): Int {
     val parts = (str.toLowerCase()).split1(" ")
     if (parts.size < 2) return -1
     var count = 0
-    for (i in 1 until (parts.size - 1)) {
+    for (i in 1 until (parts.size)) {
         if (parts[i - 1] == parts[i]) return str.indexOf(parts[i], startIndex = count)
         count += parts[i - 1].length + 1
     }
