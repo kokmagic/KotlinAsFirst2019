@@ -216,7 +216,7 @@ fun firstDuplicateIndex(str: String): Int {
     if (parts.size < 2) return -1
     var count = 0
     for (i in 1 until (parts.size)) {
-        if (parts[i - 1] == parts[i]) return str.indexOf(parts[i], startIndex = count)
+        if (parts[i - 1] == parts[i]) return (str.toLowerCase()).indexOf(parts[i - 1], startIndex = count)
         count += parts[i - 1].length + 1
     }
     return -1
