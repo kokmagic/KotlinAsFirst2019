@@ -3,6 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import kotlin.text.split as split1
 
 /**
  * Пример
@@ -11,7 +12,7 @@ import lesson2.task2.daysInMonth
  * Разобрать эту строку и рассчитать количество секунд, прошедшее с начала дня.
  */
 fun timeStrToSeconds(str: String): Int {
-    val parts = str.split(":")
+    val parts = str.split1(":")
     var result = 0
     for (part in parts) {
         val number = part.toInt()
@@ -72,7 +73,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val parts = str.split(" ")
+    val parts = str.split1(" ")
     Regex("""(\d+) ([a-яё]+) (\d+)""").find(str) ?: return ""
     if (parts.size < 3) return ""
     val day = parts[0].toInt()
@@ -108,7 +109,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val parts = digital.split(".")
+    val parts = digital.split1(".")
     Regex("""(\d\d).(\d\d).(\d+)""").find(digital) ?: return ""
     if (parts.size != 3) return ""
     val day = parts[0].toInt()
@@ -192,7 +193,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = (str.toLowerCase()).split1(" ")
+    if (parts.size < 2) return -1
+    var count = 0
+    for (i in 1 until (parts.size - 1)) {
+        if (parts[i - 1] == parts[i]) return str.indexOf(parts[i], startIndex = count)
+        count += parts[i - 1].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная
