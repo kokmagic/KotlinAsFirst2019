@@ -1,8 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson7.task1
-
-import kotlinx.html.InputType
 import java.io.File
 
 /**
@@ -162,6 +160,7 @@ fun centerFile(inputName: String, outputName: String) {
 fun alignFileByWidth(inputName: String, outputName: String) {
     TODO()
 }
+
 
 /**
  * Средняя
