@@ -72,26 +72,31 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+fun listOfMonths(month: String): String {
+    var a = month
+    val list = listOf(
+        "", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа",
+        "сентября", "октября", "ноября", "декабря"
+    )
+    for (i in list.indices) {
+        if (a == list[i]) {
+            a = i.toString()
+            break
+        }
+        if ((a == "0$i") || (a == "$i")) {
+            a = list[i]
+            break
+        }
+    }
+    return if (a == month) "" else a
+}
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     Regex("""(\d+) ([a-яё]+) (\d+)""").find(str) ?: return ""
     if (parts.size < 3) return ""
     val day = parts[0].toInt()
-    val month = when (parts[1]) {
-        "января" -> 1
-        "февраля" -> 2
-        "марта" -> 3
-        "апреля" -> 4
-        "мая" -> 5
-        "июня" -> 6
-        "июля" -> 7
-        "августа" -> 8
-        "сентября" -> 9
-        "октября" -> 10
-        "ноября" -> 11
-        "декабря" -> 12
-        else -> return ""
-    }
+    val month = listOfMonths(parts[1]).toIntOrNull() ?: return ""
     val year = parts[2].toInt()
     if (day > daysInMonth(month, year)) return ""
     return String.format("%02d.%02d.%d", day, month, year)
@@ -113,21 +118,8 @@ fun dateDigitToStr(digital: String): String {
     Regex("""(\d\d).(\d\d).(\d+)""").find(digital) ?: return ""
     if (parts.size != 3) return ""
     val day = parts[0].toInt()
-    val month = when (parts[1]) {
-        "01" -> "января"
-        "02" -> "февраля"
-        "03" -> "марта"
-        "04" -> "апреля"
-        "05" -> "мая"
-        "06" -> "июня"
-        "07" -> "июля"
-        "08" -> "августа"
-        "09" -> "сентября"
-        "10" -> "октября"
-        "11" -> "ноября"
-        "12" -> "декабря"
-        else -> return ""
-    }
+    val month = listOfMonths(parts[1])
+    if (month == "") return ""
     if (day > daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
     return String.format("%d %s %s", day, month, parts[2])
 }
