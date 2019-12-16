@@ -66,6 +66,7 @@ class Tests {
     @Tag("Easy")
     fun digitNumber() {
         assertEquals(1, digitNumber(0))
+        assertEquals(2, digitNumber(-20))
         assertEquals(1, digitNumber(7))
         assertEquals(2, digitNumber(10))
         assertEquals(2, digitNumber(99))
@@ -228,6 +229,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun squareSequenceDigit() {
+        assertEquals(2, squareSequenceDigit(115991))
         assertEquals(1, squareSequenceDigit(1))
         assertEquals(4, squareSequenceDigit(2))
         assertEquals(5, squareSequenceDigit(7))
@@ -239,6 +241,7 @@ class Tests {
     @Test
     @Tag("Hard")
     fun fibSequenceDigit() {
+        assertEquals(1, fibSequenceDigit(53))
         assertEquals(1, fibSequenceDigit(1))
         assertEquals(1, fibSequenceDigit(2))
         assertEquals(3, fibSequenceDigit(4))

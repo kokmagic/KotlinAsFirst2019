@@ -3,7 +3,7 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
-import kotlin.text.split as split1
+import kotlin.text.split
 
 /**
  * Пример
@@ -12,7 +12,7 @@ import kotlin.text.split as split1
  * Разобрать эту строку и рассчитать количество секунд, прошедшее с начала дня.
  */
 fun timeStrToSeconds(str: String): Int {
-    val parts = str.split1(":")
+    val parts = str.split(":")
     var result = 0
     for (part in parts) {
         val number = part.toInt()
@@ -73,7 +73,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val parts = str.split1(" ")
+    val parts = str.split(" ")
     Regex("""(\d+) ([a-яё]+) (\d+)""").find(str) ?: return ""
     if (parts.size < 3) return ""
     val day = parts[0].toInt()
@@ -109,7 +109,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val parts = digital.split1(".")
+    val parts = digital.split(".")
     Regex("""(\d\d).(\d\d).(\d+)""").find(digital) ?: return ""
     if (parts.size != 3) return ""
     val day = parts[0].toInt()
@@ -161,7 +161,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
 fun bestLongJump(jumps: String): Int {
     if (jumps.contains(Regex("""[^0-9%\-\s]"""))) return -1
     var max = 0
-    val parts = jumps.split1(" ")
+    val parts = jumps.split(" ")
     for (part in parts) {
         val matchResult = Regex("""\d+""").find(part)
         if (matchResult != null) {
@@ -184,7 +184,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     var max = 0
-    val parts = jumps.split1(" ")
+    val parts = jumps.split(" ")
     for (i in 0..(parts.size - 2) step 2) {
         if ((parts[i + 1].contains("+")) && (parts[i].toInt() > max)) max = parts[i].toInt()
     }
@@ -212,7 +212,7 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    val parts = (str.toLowerCase()).split1(" ") //
+    val parts = (str.toLowerCase()).split(" ") //
     if (parts.size < 2) return -1
     var count = 0
     for (i in 1 until (parts.size)) {
