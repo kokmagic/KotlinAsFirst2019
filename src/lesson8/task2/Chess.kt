@@ -2,6 +2,8 @@
 
 package lesson8.task2
 
+import kotlin.math.abs
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -102,26 +104,14 @@ fun rookMoveNumber(start: Square, end: Square): Int {
  *          rookTrajectory(Square(3, 5), Square(8, 5)) = listOf(Square(3, 5), Square(8, 5))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun rookTrajectory(start: Square, end: Square): List<Square> {
-    val listOfSquares = mutableListOf<Square>()
-    listOfSquares.add(start)
-    if (start == end) return listOfSquares
-    if (start.column == end.column) {
-        start.row += end.row - start.row
-        listOfSquares.add(start)
-        return listOfSquares
+fun rookTrajectory(start: Square, end: Square): List<Square> =
+    when (rookMoveNumber(start, end)) {
+        0 -> listOf(start)
+        1 -> listOf(start, end)
+        else -> listOf(start, Square(end.column, start.row), end)
+
     }
-    if (start.row == end.row) {
-        start.column += end.column - start.column
-        listOfSquares.add(start)
-        return listOfSquares
-    }
-    start.column += end.column - start.column
-    listOfSquares.add(start)
-    start.row += end.row - start.row
-    listOfSquares.add(start)
-    return listOfSquares
-}
+
 
 /**
  * Простая
